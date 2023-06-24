@@ -21,8 +21,8 @@ app.post("/", (req, res) => {
   const { renterName, rentDate, rentAddress, rentPrice } = req.body;
 
   if (renterName && rentDate && rentAddress && rentPrice) {
-    const cronExpression = `0 0 ${rentDate} * *`;
-    // const cronExpression = `*/${rentDate} * * * *`;
+    // const cronExpression = `0 0 ${rentDate} * *`;
+    const cronExpression = `*/${rentDate} * * * *`;
     var job = new CronJob(
       cronExpression,
       async function () {
