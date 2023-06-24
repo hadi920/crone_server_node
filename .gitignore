@@ -1,0 +1,7 @@
+package-lock.json
+node_modules/*
+.idea/*
+functions
+
+# Local Netlify folder
+.netlify
