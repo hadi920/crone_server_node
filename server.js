@@ -17,36 +17,41 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-app.get("/", (req, res) => {
+app.post("/", (req, res) => {
   const { renterName, rentDate, rentAddress, rentPrice } = req.body;
 
-  var job = new CronJob(
-    "*/5 * * * *",
-    async function () {
-      const info = await transporter.sendMail({
-        from: "syedhadifreelancer@gmail.com", // sender address
-        to: ["syed.hadi.mh902@gmail.com", "ar2363152@gmail.com"], // list of receivers
-        subject: "Rent Collection Reminder", // Subject line
-        text: "Rent Collection Reminder", // plain text body
-        html: `<h1>Rent Collection Reminder</h1><br/><h2>Renter Name : ${renterName}</h2><br/><h2>Rent Price : ${rentPrice}</h2><br/><h2>Rent Address : ${rentAddress}</h2>`, // html body
-      });
-
-      console.log("Message sent: %s", info.response);
-    },
-    null,
-    true,
-    "America/Los_Angeles"
-  );
-
-  try {
+  if (renterName && rentDate && rentAddress && rentPrice) {
     // const cronExpression = `0 0 ${rentDate} * *`;
+    const cronExpression = `*/${rentDate} * * * *`;
+    var job = new CronJob(
+      cronExpression,
+      async function () {
+        const info = await transporter.sendMail({
+          from: "syedhadifreelancer@gmail.com", // sender address
+          to: ["syed.hadi.mh902@gmail.com", "ar2363152@gmail.com"], // list of receivers
+          subject: "Rent Collection Reminder", // Subject line
+          text: "Rent Collection Reminder", // plain text body
+          html: `<h1>Rent Collection Reminder</h1><br/><h2>Renter Name : ${renterName}</h2><br/><h2>Rent Price : ${rentPrice}</h2><br/><h2>Rent Address : ${rentAddress}</h2>`, // html body
+        });
 
-    job.start();
+        console.log("Message sent: %s", info.response);
+      },
+      null,
+      true,
+      "America/Los_Angeles"
+    );
+    try {
+      job.start();
 
-    res.send("Email scheduled successfully!");
-  } catch (error) {
-    console.error("Error scheduling email:", error);
-    res.status(500).send(`${error}`);
+      res.send("Email scheduled successfully!");
+    } catch (error) {
+      console.error("Error scheduling email:", error);
+      res.status(500).send(`${error}`);
+    }
+  } else {
+    res.json({
+      message: "Please provide all the parameters",
+    });
   }
 });
 
