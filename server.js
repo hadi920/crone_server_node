@@ -42,7 +42,7 @@ app.post("/", (req, res) => {
     );
     try {
       job.start();
-
+      console.log(`Email scheduled successfully for ${renterName}`);
       res.send("Email scheduled successfully!");
     } catch (error) {
       console.error("Error scheduling email:", error);
