@@ -31,7 +31,7 @@ app.post("/", (req, res) => {
           to: ["syed.hadi.mh902@gmail.com", "ar2363152@gmail.com"], // list of receivers
           subject: "Rent Collection Reminder", // Subject line
           text: "Rent Collection Reminder", // plain text body
-          html: `<h1>Rent Collection Reminder</h1><br/><h2>Renter Name : ${renterName}</h2><br/><h2>Rent Price : ${rentPrice}</h2><br/><h2>Rent Address : ${rentAddress}</h2>`, // html body
+          html: `<h1>Rent Collection Reminder</h1><p><b>Renter Name</b> : ${renterName}</p><p><b>Rent Price</b> : ${rentPrice}</p><p><b>Rent Address</b> : ${rentAddress}</p>`, // html body
         });
 
         console.log("Message sent: %s", info.response);
