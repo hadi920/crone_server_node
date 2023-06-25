@@ -17,6 +17,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "Hello World",
+  });
+});
+
 app.post("/shedule-email", (req, res) => {
   const { renterName, rentDate, rentAddress, rentPrice } = req.body;
 
