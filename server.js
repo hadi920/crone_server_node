@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-app.post("/", (req, res) => {
+app.post("/shedule-email", (req, res) => {
   const { renterName, rentDate, rentAddress, rentPrice } = req.body;
 
   if (renterName && rentDate && rentAddress && rentPrice) {
